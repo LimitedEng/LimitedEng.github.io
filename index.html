@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dawid Kowalski | Mechatronics Engineering Student</title>
+<meta name="description" content="Portfolio of Dawid Kowalski, a mechatronics engineering student seeking a placement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#9ac3d3; --panel:#f6f8f9; --ink:#12202b; --muted:#546572;
+  --line:#b9c6cd; --accent:#e8590c; --teal:#0f5c63;
+  --font:"Archivo","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:1.0625rem;line-height:1.6}
+a{color:var(--teal)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+
+/* Header */
+header.top{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 0}
+header.top .name{font-weight:700;text-decoration:none;color:var(--ink)}
+header.top nav a{margin-left:1.25rem;text-decoration:none;color:var(--muted)}
+header.top nav a:hover{color:var(--ink)}
+
+/* Hero */
+.hero{padding:3rem 0 2rem}
+.hero h1{font-stretch:125%;font-weight:800;font-size:clamp(2.4rem,7vw,4.75rem);line-height:1;margin:0 0 1rem;letter-spacing:-.01em}
+.hero p{max-width:34em;font-size:1.2rem;color:var(--muted);margin:0}
+.stack{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.stack span{border:1.5px solid var(--ink);padding:.15rem .7rem;font-size:.9rem;font-weight:600;border-radius:2px}
+
+/* Section headings */
+h2{font-stretch:112%;font-weight:700;font-size:1.6rem;margin:0 0 1.25rem}
+section{padding:2.5rem 0}
+
+/* Carousel */
+.carousel-head{margin-bottom:1rem}
+.carousel-head h2{margin:0}
+.stage{position:relative;--sw:min(78vw,600px);--gap:1.25rem}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:2.9rem;height:2.9rem;border:1.5px solid var(--ink);background:var(--panel);color:var(--ink);font-size:1.3rem;cursor:pointer;border-radius:2px}
+.arrow.prev{left:0}
+.arrow.next{right:0}
+.arrow:hover:not(:disabled){background:var(--ink);color:var(--panel)}
+.arrow:disabled{opacity:.35;cursor:default}
+.track{position:relative;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:1rem 0;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.track::before,.track::after{content:"";flex:0 0 calc(50% - var(--sw)/2 - var(--gap))}
+.slide{flex:0 0 var(--sw);scroll-snap-align:center;scroll-snap-stop:always;background:var(--panel);border:1.5px solid var(--ink);display:flex;flex-direction:column;will-change:transform,opacity}
+.slide:not(.is-active){cursor:pointer}
+.media{aspect-ratio:16/9;border-bottom:1.5px solid var(--ink);display:grid;place-items:center;color:var(--muted);font-size:.9rem;
+  background-color:#dbe4e8;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:24px 24px}
+.media img{width:100%;height:100%;object-fit:cover;display:block}
+.body{padding:1.25rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.6rem;flex:1}
+.tags{display:flex;gap:.4rem;flex-wrap:wrap}
+.tag{font-size:.8rem;font-weight:600;padding:.05rem .55rem;border-radius:2px;background:var(--teal);color:#fff}
+.tag.elec{background:var(--accent)}
+.tag.soft{background:var(--ink)}
+.slide h3{margin:0;font-stretch:112%;font-size:1.35rem;line-height:1.2}
+.slide p{margin:0;color:var(--muted)}
+.slide .link{margin-top:auto;font-weight:600}
+.dots{display:flex;gap:.55rem;justify-content:center;align-items:center;margin-top:.25rem;padding:.3rem 0}
+.dots button{width:.8rem;height:.8rem;border-radius:50%;border:1.5px solid var(--ink);background:transparent;padding:0;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+.dots button[aria-current="true"]{transform:scale(1.5);background:var(--accent);border-color:var(--accent)}
+@media(max-width:600px){.arrow{width:2.4rem;height:2.4rem;font-size:1.1rem;top:28%}}
+@media(prefers-reduced-motion:reduce){.dots button{transition:none}}
+
+/* Multi-photo slides */
+.media.multi{position:relative;display:block;overflow:hidden}
+.shots{position:absolute;inset:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.shots::-webkit-scrollbar{display:none}
+.shots img,.shots video{flex:0 0 100%;width:100%;height:100%;object-fit:cover;display:block;scroll-snap-align:center}
+.shot-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:1;width:2rem;height:2rem;padding:0;border:1.5px solid var(--ink);background:var(--panel);color:var(--ink);font-size:1rem;cursor:pointer;border-radius:2px}
+.shot-btn:hover{background:var(--ink);color:var(--panel)}
+.shot-btn.p{left:.5rem}
+.shot-btn.n{right:.5rem}
+.shot-count{position:absolute;right:.5rem;bottom:.5rem;z-index:1;background:var(--ink);color:#fff;font-size:.75rem;font-weight:600;padding:.05rem .5rem;border-radius:2px}
+.shot-btn[hidden],.shot-count[hidden]{display:none}
+
+/* About + credentials */
+.cols{display:grid;gap:2rem;grid-template-columns:1fr}
+@media(min-width:800px){.cols{grid-template-columns:1.4fr 1fr}}
+.creds{list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.creds li{padding:.8rem 0;border-bottom:1px solid var(--line)}
+.creds b{display:block}
+.creds small{color:var(--muted)}
+
+/* Contact */
+.contact a{display:inline-block;margin:0 1.25rem .5rem 0;font-weight:600}
+footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <a class="name" href="#top">Dawid Kowalski</a>
+  <nav aria-label="Main">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <h1>Mechatronics engineering student</h1>
+  <p>I'm Dawid Kowalski, a 2nd-yearstudent at Lincoln University looking for a placement. I design and build systems that combine mechanical parts, electronics and code.</p>
+  <div class="stack" aria-label="Skills">
+    <!-- Edit these to match what you've really used -->
+    <span>CAD</span><span>ESP32</span><span>C/C++</span><span>Python</span><span>Robotics</span><span>Hydraulics</span><span>Team</span>
+  </div>
+</section>
+
+<section id="projects" aria-labelledby="proj-h">
+  <div class="carousel-head">
+    <h2 id="proj-h">Projects and experience</h2>
+  </div>
+
+  <div class="stage">
+  <button class="arrow prev" id="prev" aria-label="Previous project">&#8592;</button>
+  <button class="arrow next" id="next" aria-label="Next project">&#8594;</button>
+  <div class="track" id="track" tabindex="0" role="region" aria-label="Project carousel, use arrow keys to scroll">
+
+    <!-- To use your own photo: replace the contents of <div class="media"> with <img src="images/your-photo.jpg" alt="Describe the image"> -->
+
+    <article class="slide">
+      <div class="media multi">
+        <div class="shots">
+          <img src="images/LRlogo.jpg" alt="Lincoln Racing Formula Student logo">
+          <img src="images/LR.jpg" alt="Lincoln Racing Formula Student team photo">
+        </div>
+        <button class="shot-btn p" aria-label="Previous photo">&#8592;</button>
+        <button class="shot-btn n" aria-label="Next photo">&#8594;</button>
+        <span class="shot-count"></span>
+      </div>
+      <div class="body">
+        <div class="tags"><span class="tag">Mechanical</span><span class="tag elec">Team</span><span class="tag Hydra">Hydraulic</span></div>
+        <h3>Formula Student: Brakes team</h3>
+        <p>November 2025 - Present</p>
+        <p>During my time with Lincoln's Formula Student team, I was assigned to the brakes team, where I was responsible for researching different hydraulic braking systems and carrying out the calculations required for our specific system. I also researched and selected the components needed for the braking system and began modelling the design in CAD. This project has given me experience in hydraulic systems, engineering calculations, component selection and CAD design. This year, we aim to enter and showcase our car in the Concept Class competition.</p>
+        <a class="link" href="https://www.lincoln.ac.uk/alumnicommunity/supporttheuniversity/lincolnracingformulastudentproject/" target="_blank" rel="noopener noreferrer">See more</a>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="media"><img src="images/WHlogo.jpg" alt="World Heat cylinders logo"></div>
+      <div class="body">
+        <div class="tags"><span class="tag">Mechanical</span><span class="tag soft">Industry</span></div>
+        <h3>Assistant Engineer, World Heat</h3>
+        <p>May 2025 - June 2025</p>
+        <p>During my time at World Heat, I gained practical experience working with Fusion 360 and AutoCAD within an engineering environment. I was responsible for updating and modifying existing 3D CAD models to reflect design changes and improve their accuracy. This gave me experience working with real engineering designs and supporting the wider engineering team through CAD development and design documentation.</p>
+        <a class="link" href="https://www.whcylinders.co.uk/about-us/" target="_blank" rel="noopener noreferrer">See more</a>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="media multi">
+        <div class="shots">
+          <img src="images/RoboticArm.jpg" alt="Robotic arm">
+          <video src="images/GripperWorking1.mp4" controls muted loop playsinline preload="metadata" poster="images/robot-arm.jpg"></video>
+        </div>
+        <button class="shot-btn p" aria-label="Previous photo">&#8592;</button>
+        <button class="shot-btn n" aria-label="Next photo">&#8594;</button>
+        <span class="shot-count"></span>
+      </div>
+      <div class="body">
+        <div class="tags"><span class="tag">Mechanical</span><span class="tag elec">Electronics</span><span class="tag soft">Software</span></div>
+        <h3>Robotic arm</h3>
+        <p>January 2025 - June 2025</p>
+        <p>This was the first “big” engineering project I worked on when I was 16. The robotic arm had 4 degrees of freedom and could consistently lift up to 1 kg. This was originally developed as a college project, so I never fully completed it, but it gave me valuable experience in mechanical design, CAD, electronics and programming.</p>
+
+      </div>
+    </article>
+
+      <article class="slide">
+      <div class="media"><img src="images/FireAlarm.jpg" alt="World Heat cylinders logo"></div>
+      <div class="body">
+        <div class="tags"><span class="tag">Mechanical</span><span class="tag elec">Electronics</span><span class="tag elec">Team</span></div>
+        <h3>Fire security concept project</h3>
+        <p>February 2026 - June 2026</p>
+        <p>This project focused on improving modern fire alarm systems by expanding their capabilities beyond traditional carbon monoxide, carbon dioxide and heat detection. Our concept combined these sensors with motion sensors and cameras capable of detecting and identifying people inside a building. We proposed a companion app or handheld system that could provide firefighters with information about where people may be trapped inside a building. This could help emergency responders save valuable time by directing them towards rooms where people are detected, rather than having to search every room individually. The project gave me experience in developing engineering concepts, identifying real world problems and designing technology around a specific safety application.</p>
+        <a class="link" href="docs/AlarmDoc.pdf" target="_blank" rel="noopener">Read the write-up</a>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="media">ESP32 photo coming soon</div>
+      <div class="body">
+        <div class="tags"><span class="tag elec">Electronics</span><span class="tag soft">Software</span></div>
+        <h3>3D printer completion alert (ESP32)</h3>
+        <p>June 2026 - present</p>
+        <p>This project is a 3D printer completion detector built around an ESP32. It uses a red LED while a print is in progress and a green LED when the print has completed or the printer is not printing. The system is currently fully functional, but I am continuing to develop it with plans to add features such as an LCD display for showing the printer's status and additional information.</p>
+
+      </div>
+    </article>
+
+    <!-- To add a new project later, copy one <article class="slide"> block and paste it at the end of this list -->
+  </div>
+  </div>
+
+  <div class="dots" id="dots" aria-label="Choose project"></div>
+</section>
+
+<section id="about" aria-labelledby="about-h">
+  <div class="cols">
+    <div>
+      <h2 id="about-h">About me</h2>
+      <p>I originally got into mechatronics when I watched Iron Man as a kid, thinking yes, I wanted to do that! Now I study mechatronics with a passion for robotics, I love using seeing electronic and mechanical systems in action. And I hope that as I continue to develop my skills and gain further experience!</p>
+      <p>I particularly like hiking, exploring new countries and playing video games. I often go on camping trips and travel to different places.</p>
+    </div>
+    <div>
+      <h2>Credentials</h2>
+      <ul class="creds">
+        <li><b>IMechE student member</b><small>Institution of Mechanical Engineers</small></li>
+        <li><b>BEng/MEng Mechatronics</b><small>University of Lincoln, 2025-present</small></li>
+        <li><b>Formula Student</b><small>Brakes team, University of Lincoln</small></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact" aria-labelledby="contact-h">
+  <h2 id="contact-h">Contact</h2>
+  <a href="mailto:kowalski.7254@gmail.com">kowalski.7254@gmail.com</a>
+  <a href="https://www.linkedin.com/in/dawid-kowalski-/">LinkedIn</a>
+  <a href="https://github.com/LimitedEng">GitHub</a>
+  <a href="cv.pdf">Download CV (PDF)</a>
+</section>
+
+</main>
+
+<footer>&copy; <span id="yr"></span> Dawid Kowalski</footer>
+</div>
+
+<script>
+(function(){
+  var track=document.getElementById('track');
+  var originals=Array.prototype.slice.call(track.children);
+  var n=originals.length;
+  var prev=document.getElementById('prev'), next=document.getElementById('next');
+  var dotsBox=document.getElementById('dots');
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  /* Copies of the first and last few slides sit either side, so the ends look continuous */
+  var K=Math.min(3,n);
+  function copy(s){
+    var c=s.cloneNode(true);
+    c.setAttribute('aria-hidden','true');
+    Array.prototype.forEach.call(c.querySelectorAll('a,button'),function(a){a.tabIndex=-1});
+    return c;
+  }
+  originals.slice(n-K).forEach(function(s){ track.insertBefore(copy(s),originals[0]); });
+  originals.slice(0,K).forEach(function(s){ track.appendChild(copy(s)); });
+
+  var all=Array.prototype.slice.call(track.children);
+  var active=K, target=null;
+  function base(){ return target===null?active:target; }
+  function real(i){ return ((i-K)%n+n)%n; }
+
+  var dots=originals.map(function(s,i){
+    var b=document.createElement('button');
+    b.setAttribute('aria-label','Go to project '+(i+1));
+    b.addEventListener('click',function(){
+      var d=i-real(base());
+      if(d>n/2) d-=n; else if(d<-n/2) d+=n;
+      var t=base()+d;
+      go(t<0||t>=all.length ? i+K : t);
+    });
+    dotsBox.appendChild(b);
+    return b;
+  });
+
+  function centre(i){ return all[i].offsetLeft+all[i].offsetWidth/2; }
+  function go(i){
+    i=Math.max(0,Math.min(all.length-1,i));
+    target=i;
+    track.scrollTo({left:centre(i)-track.clientWidth/2,behavior:'smooth'});
+  }
+  function jump(i){
+    target=null;
+    track.style.scrollSnapType='none';
+    track.scrollTo({left:centre(i)-track.clientWidth/2,behavior:'instant'});
+    update();
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ track.style.scrollSnapType=''; }); });
+  }
+  function update(){
+    var mid=track.scrollLeft+track.clientWidth/2, best=0, bestD=1e9;
+    all.forEach(function(s,i){
+      var d=Math.abs(centre(i)-mid);
+      if(d<bestD){bestD=d;best=i}
+      var t=Math.min(d/(s.offsetWidth*0.9),1);
+      s.style.opacity=(1-0.65*t).toFixed(3);
+      s.style.transform='scale('+(1-0.08*t).toFixed(3)+')';
+    });
+    active=best;
+    all.forEach(function(s,i){ s.classList.toggle('is-active',i===best) });
+    dots.forEach(function(b,i){ b.setAttribute('aria-current',i===real(best)?'true':'false') });
+  }
+
+  /* When scrolling stops on a copy, quietly jump to the identical real slide */
+  var settle;
+  function onSettle(){
+    target=null;
+    if(active<K||active>=n+K) jump(real(active)+K);
+  }
+  track.addEventListener('scroll',function(){
+    window.requestAnimationFrame(update);
+    clearTimeout(settle); settle=setTimeout(onSettle,120);
+  });
+
+  prev.addEventListener('click',function(){ go(base()-1) });
+  next.addEventListener('click',function(){ go(base()+1) });
+  all.forEach(function(s,i){
+    s.addEventListener('click',function(e){
+      if(i!==active){ e.preventDefault(); go(i); }
+    });
+  });
+  track.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'){e.preventDefault();go(base()+1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();go(base()-1)}
+  });
+  window.addEventListener('resize',function(){ jump(real(active)+K); });
+  jump(K);
+})();
+</script>
+<script>
+/* Photo strips inside project slides */
+(function(){
+  var track=document.getElementById('track');
+  function count(s){
+    var box=s.parentNode, c=box.querySelector('.shot-count');
+    var one=s.children.length<2;
+    Array.prototype.forEach.call(box.querySelectorAll('.shot-btn,.shot-count'),function(x){ x.hidden=one; });
+    if(c) c.textContent=(Math.round(s.scrollLeft/s.clientWidth)+1)+' / '+s.children.length;
+  }
+  Array.prototype.forEach.call(track.querySelectorAll('.shots'),count);
+  track.addEventListener('click',function(e){
+    var b=e.target.closest('.shot-btn'); if(!b) return;
+    var s=b.parentNode.querySelector('.shots');
+    s.scrollBy({left:(b.classList.contains('n')?1:-1)*s.clientWidth,behavior:'smooth'});
+  });
+  track.addEventListener('scroll',function(e){
+    if(e.target.classList&&e.target.classList.contains('shots')) count(e.target);
+  },true);
+})();
+</script>
+</body>
+</html>
